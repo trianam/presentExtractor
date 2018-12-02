@@ -1,53 +1,52 @@
 #! /usr/bin/env python
 
+import pandas as pd
+import json
 import random
 import smtplib
 from email.mime.text import MIMEText
 
-def sendMessage(dest, subject, message):
-    msg = MIMEText(message)
+data = json.load(open("data.json", 'rt'))
+users = json.load(open("users.json", 'rt'))
 
-    msg['Subject'] = subject
-    msg['From'] = 'xxx@xxx.xxx'
-    msg['To'] = dest
+def sendMessage(dest, objective, debug=False):
+    if debug:
+        print("\t {} -> {}".format(dest, objective))
+    else:
+        msg = MIMEText(data['msgBase'] + objective)
 
-    smtpObj = smtplib.SMTP_SSL('smtp.xxx.xxx', 465)
-    smtpObj.login('xxx@xxx.xxx', 'xxx')
-    smtpObj.send_message(msg)
-    smtpObj.quit()
+        msg['Subject'] = data['subject']
+        msg['From'] = data['from']
+        msg['To'] = users['mails'][dest]
+
+        smtpObj = smtplib.SMTP_SSL(data['smtp'], data['port'])
+        smtpObj.login(data['user'], data['password'])
+        smtpObj.send_message(msg)
+        smtpObj.quit()
 
 
+df = pd.DataFrame(users['possibilities'])
+print("Possibilities:")
+print(df.to_string(na_rep='-'))
+print("")
 
-mails = {
-    'Stefano': 'xxx@xxx.xxx',
-    'Federica': 'xxx@xxx.xxx', 
-    'Chiara': 'xxx@xxx.xxx',
-    'Alberto': 'xxx@xxx.xxx',
-    'Sara': 'xxx@xxx.xxx',
-    'Lorenzo': 'xxx@xxx.xxx'}
-
-possibles = {
-    'Stefano': {'Chiara', 'Alberto', 'Sara', 'Lorenzo'},
-    'Federica': {'Chiara', 'Alberto', 'Sara', 'Lorenzo'},
-    'Chiara': {'Stefano', 'Federica', 'Sara', 'Lorenzo'},
-    'Alberto': {'Stefano', 'Federica', 'Sara', 'Lorenzo'},
-    'Sara': {'Stefano', 'Federica', 'Chiara', 'Alberto'},
-    'Lorenzo': {'Stefano', 'Federica', 'Chiara', 'Alberto'}}
 
 result = dict()
 extracted = set()
 
 while len(result) == 0:
     try:
-        for name in mails.keys():
-            result[name] = random.sample(possibles[name] - extracted, 1)[0]
+        for name in users['mails'].keys():
+            possibles = set([ k for k in users['possibilities'][name] if users['possibilities'][name][k] == True ])
+            result[name] = random.sample(possibles - extracted, 1)[0]
             extracted.add(result[name])
     except:
         result = dict()
         extracted = set()
 
-for name in mails.keys():
-    sendMessage(mails[name], 'Regali per il compleanno di Zoroastro', "Complimenti! Sei stata/o scelta/o per fare il regalo a:\n"+result[name])
+for name in result.keys():
+    print("Send to {} ({})".format(name, users['mails'][name]))
+    sendMessage(name, result[name])
 
-print("Extraction process completed")
+print("\nExtraction process completed")
 

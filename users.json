@@ -1,0 +1,20 @@
+{
+  "mails": {
+    "Alberto": "xxx@xxx.xx",
+    "Chiara": "xxx@xxx.xx",
+    "Federica": "xxx@xxx.xx",
+    "Lorenzo": "xxx@xxx.xx",
+    "Pia": "xxx@xxx.xx",
+    "Sara": "xxx@xxx.xx",
+    "Stefano": "xxx@xxx.xx"
+  },
+  "possibilities": {
+    "Alberto": {"Alberto": false, "Chiara": false, "Federica": true, "Lorenzo": true, "Pia": true, "Sara": true, "Stefano": true},
+    "Chiara": {"Alberto": false, "Chiara": false, "Federica": true, "Lorenzo": true, "Pia": true, "Sara": true, "Stefano": true},
+    "Federica": {"Alberto": true, "Chiara": true, "Federica": false, "Lorenzo": true, "Pia": true, "Sara": true, "Stefano": false},
+    "Lorenzo": {"Alberto": true, "Chiara": true, "Federica": true, "Lorenzo": false, "Pia": true, "Sara": false, "Stefano": true},
+    "Pia": {"Alberto": true, "Chiara": true, "Federica": true, "Lorenzo": true, "Pia": false, "Sara": true, "Stefano": true},
+    "Sara": {"Alberto": true, "Chiara": true, "Federica": true, "Lorenzo": false, "Pia": true, "Sara": false, "Stefano": true},
+    "Stefano": {"Alberto": true, "Chiara": true, "Federica": false, "Lorenzo": true, "Pia": true, "Sara": true, "Stefano": false}
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "from": "xxx@xxx.xx",
+  "msgBase": "Sei stata/o scelta/o per fare il regalo a:\n",
+  "password": "xxx",
+  "port": 465,
+  "smtp": "xxx.xx",
+  "subject": "Santa Claus is coming!",
+  "user": "xxx"
+}
