@@ -38,7 +38,7 @@ while len(result) == 0:
     try:
         for name in users['mails'].keys():
             possibles = set([ k for k in users['possibilities'][name] if users['possibilities'][name][k] == True ])
-            result[name] = random.sample(possibles - extracted, 1)[0]
+            result[name] = random.sample(list(possibles - extracted), 1)[0]
             extracted.add(result[name])
     except:
         result = dict()
