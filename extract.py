@@ -7,10 +7,10 @@ import smtplib
 from email.mime.text import MIMEText
 
 debugRep = 100000
-debug = False
-# debug = True
+# debug = False
+debug = True
 data = json.load(open("data.json", 'rt'))
-users = json.load(open("usersScandicci.json", 'rt'))
+users = json.load(open("users.json", 'rt'))
 
 def sendMessage(dest, objective, debug=False):
     if debug:
